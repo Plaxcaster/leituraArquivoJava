@@ -78,11 +78,22 @@ public class Main {
 			}
 
 
-			System.out.println(listMovies.get(1).getGenre());
-			
-			LocalDate endTime = LocalDate.now();
-			Period totalProcessingTime = Period.between(endTime, startTime);
+			LocalDateTime endTime = LocalDateTime.now();
+			double totalProcessingTime = ChronoUnit.MILLIS.between(startTime, endTime);
 			System.out.println(totalProcessingTime);
+			
+			try{
+				PrintWriter writer = new PrintWriter("ProcessingReport", "UTF-8");
+				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss.A");
+				writer.println("Processamento iniciado em: "+startTime.format(formatter));
+				writer.println("Processamento finalizado em: "+endTime.format(formatter));
+				writer.println("Processamento levou: "+totalProcessingTime/1000+" segundos");
+				writer.println("Processamento levou: "+totalProcessingTime+" milisegundos");
+				writer.close();
+			} catch (IOException e){
+				System.out.println("An error occurred.");
+				e.printStackTrace();
+			}
 	}
 
 }
