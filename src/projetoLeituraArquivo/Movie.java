@@ -19,6 +19,7 @@ public class Movie {
 		super();
 		this.rawData = rawData;
 		String[] rawDataSplit = this.rawData.split("(?!\\B\"[^\"]*),(?![^\"]*\"\\B)"); //commas except commas inside quotation marks
+//		String[] rawDataSplit = this.rawData.split(",(?![^\"]*\"{1,20}\\,)"); //commas except commas inside quotation marks
 		this.rank = rawDataSplit[0];
 		this.title = rawDataSplit[1];
 		this.genre = rawDataSplit[2];

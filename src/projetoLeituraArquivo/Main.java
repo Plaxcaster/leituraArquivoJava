@@ -1,7 +1,9 @@
 package projetoLeituraArquivo;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -10,11 +12,7 @@ import java.time.LocalDateTime;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Stream;
 
 public class Main {
@@ -39,11 +37,19 @@ public class Main {
 
 			List<Movie> listMovies = new ArrayList<>();
 			List<Movie> listHorror = new ArrayList<>();
+			Set<String> setYear = new HashSet<>();
 			
 			//read file into stream, try-with-resources
 			try (Stream<String> stream = Files.lines(Paths.get(fileName))) {
 
-				stream.forEach(line -> listMovies.add(new Movie(line)));
+				stream.forEach(line -> {
+					Movie temp = new Movie(line);
+					listMovies.add(temp);
+					setYear.add(temp.getYear());
+					if (temp.getYear().contains("4531")){
+						System.out.println(line);
+					}
+				});
 
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -51,8 +57,15 @@ public class Main {
 			
 			//read file into stream, try-with-resources
 			try (Stream<String> stream = Files.lines(Paths.get(fileName2))) {
-				
-				stream.forEach(line -> listMovies.add(new Movie(line)));
+
+				stream.forEach(line -> {
+					Movie temp = new Movie(line);
+					listMovies.add(temp);
+					setYear.add(temp.getYear());
+					if (temp.getYear().contains("4531")){
+						System.out.println(line);
+					}
+				});
 				
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -60,8 +73,15 @@ public class Main {
 			
 			//read file into stream, try-with-resources
 			try (Stream<String> stream = Files.lines(Paths.get(fileName3))) {
-				
-				stream.forEach(line -> listMovies.add(new Movie(line)));
+
+				stream.forEach(line -> {
+					Movie temp = new Movie(line);
+					listMovies.add(temp);
+					setYear.add(temp.getYear());
+					if (temp.getYear().contains("4531")){
+						System.out.println(line);
+					}
+				});
 
 				System.out.println(listHorror.size());
 
@@ -85,8 +105,30 @@ public class Main {
 				e.printStackTrace();
 			}
 
+		setYear.stream().filter(s -> {
+					try {
+						Integer.parseInt(s);
+						return true;
+					} catch (final NumberFormatException e) {
+						return false;
+					}
+				})
+				.filter(s -> Integer.parseInt(s)>1500 & Integer.parseInt(s)<2050).forEach(s -> {
+			try {
+				PrintWriter writer = new PrintWriter(s, "UTF-8");
+				listMovies.stream().filter(movie -> movie.getYear().contains(s))
+						.sorted(Comparator.comparing(Movie::getRating).reversed())
+						.limit(50)
+						.forEach(y -> {writer.println(y.getTitle()+" "+y.getRating());});
+				writer.close();
+			} catch (IOException e) {
+				throw new RuntimeException(e);
+			}
 
-			LocalDateTime endTime = LocalDateTime.now();
+		});
+
+
+		LocalDateTime endTime = LocalDateTime.now();
 			double totalProcessingTime = ChronoUnit.MILLIS.between(startTime, endTime);
 			System.out.println(totalProcessingTime);
 			
