@@ -3,6 +3,7 @@ package projetoLeituraArquivo;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -26,11 +27,15 @@ public class Main {
 	  }; 
 	public static void main(String[] args) {
 			
-			LocalDate startTime = LocalDate.now();
+			LocalDateTime startTime = LocalDateTime.now();
 		
-			String fileName = "c://Users//F6855063//Let'sCode//desafios//projeto3-pedro//movies1.csv";
-			String fileName2 ="c://Users//F6855063//Let'sCode//desafios//projeto3-pedro//movies2.csv";
-			String fileName3 = "c://Users//F6855063//Let'sCode//desafios//projeto3-pedro//movies3.csv";
+//			String fileName = "c://Users//F6855063//Let'sCode//desafios//projeto3-pedro//movies1.csv";
+//			String fileName2 ="c://Users//F6855063//Let'sCode//desafios//projeto3-pedro//movies2.csv";
+//			String fileName3 = "c://Users//F6855063//Let'sCode//desafios//projeto3-pedro//movies3.csv";
+
+			String fileName = "movies1.csv";
+			String fileName2 = "movies2.csv";
+			String fileName3 = "movies3.csv";
 
 			List<Movie> listMovies = new ArrayList<>();
 			List<Movie> listHorror = new ArrayList<>();
@@ -66,7 +71,7 @@ public class Main {
 
 			//int i = 0;
 
-			listMovies.stream().sorted((m1, m2) -> m1.getRating().compareTo(m2.getRating()))
+			listMovies.stream().sorted(Comparator.comparing(Movie::getRating))
 				.forEach(y -> {if(y.getGenre().contains("Horror")){System.out.println(y.getGenre());listHorror.add(y);}});
 
 
