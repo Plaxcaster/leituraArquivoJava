@@ -5,7 +5,10 @@ import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.Period;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -63,7 +66,7 @@ public class Main {
 
 			//int i = 0;
 
-			listMovies.stream().sorted((m1, m2) -> m1.rating.compareTo(m2.rating))
+			listMovies.stream().sorted((m1, m2) -> m1.getRating().compareTo(m2.getRating()))
 				.forEach(y -> {if(y.getGenre().contains("Horror")){System.out.println(y.getGenre());listHorror.add(y);}});
 
 
