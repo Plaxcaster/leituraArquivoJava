@@ -92,13 +92,20 @@ public class Main {
 			//int i = 0;
 
 			listMovies.stream().sorted(Comparator.comparing(Movie::getRating))
-				.forEach(y -> {if(y.getGenre().contains("Horror")){System.out.println(y.getGenre());listHorror.add(y);}});
+				.forEach(y -> {
+					if(y.getGenre().contains("Horror")){
+						System.out.println(y.getGenre())
+						;listHorror.add(y);
+					}
+				});
 
 
 			try{
 				PrintWriter writer = new PrintWriter("HorrorMovies", "UTF-8");
 				Collections.reverse(listHorror);
-				listHorror.subList(0, 20).stream().forEach(y -> {writer.println(y.getTitle()+" "+y.getRating());});
+				listHorror.subList(0, 20).stream().forEach(y -> {
+					writer.println(y.getTitle()+" "+y.getRating());
+				});
 				writer.close();
 			} catch (IOException e){
 				System.out.println("An error occurred.");
@@ -119,7 +126,9 @@ public class Main {
 				listMovies.stream().filter(movie -> movie.getYear().contains(s))
 						.sorted(Comparator.comparing(Movie::getRating).reversed())
 						.limit(50)
-						.forEach(y -> {writer.println(y.getTitle()+" "+y.getRating());});
+						.forEach(y -> {
+							writer.println(y.getTitle()+" "+y.getRating());
+						});
 				writer.close();
 			} catch (IOException e) {
 				throw new RuntimeException(e);
