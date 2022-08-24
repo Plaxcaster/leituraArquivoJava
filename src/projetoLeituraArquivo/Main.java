@@ -123,7 +123,8 @@ public class Main {
 				.filter(s -> Integer.parseInt(s)>1500 & Integer.parseInt(s)<2050).forEach(s -> {
 			try {
 				PrintWriter writer = new PrintWriter(s, "UTF-8");
-				listMovies.stream().filter(movie -> movie.getYear().contains(s))
+				listMovies.stream()
+						.filter(movie -> movie.getYear().contains(s))
 						.sorted(Comparator.comparing(Movie::getRating).reversed())
 						.limit(50)
 						.forEach(y -> {
